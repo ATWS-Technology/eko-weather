@@ -73,7 +73,9 @@ function App() {
 
         const responses = await Promise.all(promises);
         const temperatures = responses.map((response) =>
-          fahrenheitToCelsius(response.data.forecast.forecastday[0].day.avgtemp_f)
+          fahrenheitToCelsius(
+            response.data.forecast.forecastday[0].day.avgtemp_f
+          )
         );
 
         setChartData({
@@ -107,6 +109,9 @@ function App() {
     <div className="app">
       <div className="search">
         <h2 style={{ padding: "20px 20px" }}>Welcome to Lagos State</h2>
+        <div className="location">
+          <p>{data.location ? data.location.localtime : null}</p>
+        </div>
         <input
           value={date}
           onChange={(event) => setDate(event.target.value)}
@@ -115,15 +120,29 @@ function App() {
         />
       </div>
       {error && <div className="error">{error}</div>}
-      {loading && <div className="loading">Loading...</div>}
+      {loading && (
+        <div className="container">
+          <h2>Loading...</h2>
+        </div>
+      )}
       <div className="container">
         <div className="top">
           <div className="location">
             <p>{data.location ? data.location.name : null}</p>
           </div>
+          <div className="location">
+            {data.forecast ? (
+              <h3>{data.forecast.forecastday[0].date}</h3>
+            ) : null}
+          </div>
           <div className="temp">
             {data.forecast ? (
-              <h1>{fahrenheitToCelsius(data.forecast.forecastday[0].day.avgtemp_f).toFixed(1)}°C</h1>
+              <h1>
+                {fahrenheitToCelsius(
+                  data.forecast.forecastday[0].day.avgtemp_f
+                ).toFixed(1)}
+                °C
+              </h1>
             ) : null}
           </div>
           <div className="description">
@@ -138,7 +157,10 @@ function App() {
             <div className="feels">
               {data.forecast.forecastday[0].day.feelslike_f ? (
                 <p className="bold">
-                  {fahrenheitToCelsius(data.forecast.forecastday[0].day.feelslike_f).toFixed(1)}°C
+                  {fahrenheitToCelsius(
+                    data.forecast.forecastday[0].day.feelslike_f
+                  ).toFixed(1)}
+                  °C
                 </p>
               ) : null}
               <p>Report for the Day</p>
@@ -163,17 +185,28 @@ function App() {
             </div>
             <div className="temp-range">
               <p className="bold">
-                High: {fahrenheitToCelsius(data.forecast.forecastday[0].day.maxtemp_f).toFixed(1)}°C
+                High:{" "}
+                {fahrenheitToCelsius(
+                  data.forecast.forecastday[0].day.maxtemp_f
+                ).toFixed(1)}
+                °C
               </p>
               <p className="bold">
-                Low: {fahrenheitToCelsius(data.forecast.forecastday[0].day.mintemp_f).toFixed(1)}°C
+                Low:{" "}
+                {fahrenheitToCelsius(
+                  data.forecast.forecastday[0].day.mintemp_f
+                ).toFixed(1)}
+                °C
               </p>
               <p>Temperature Range</p>
             </div>
           </div>
         )}
       </div>
-      <div style={{paddingRight:'50px', paddingLeft:'50px'}}>
+      <div
+        className="app2"
+        style={{ paddingRight: "50px", paddingLeft: "50px, back" }}
+      >
         {chartData.labels ? (
           <Line
             data={chartData}
