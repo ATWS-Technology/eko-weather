@@ -31,6 +31,10 @@ function App() {
 
   const apiKey = "09cfbe33ba8641e1981113826242706";
 
+  const fahrenheitToCelsius = (tempF) => {
+    return ((tempF - 32) * 5) / 9;
+  };
+
   const searchWeather = (selectedDate) => {
     setError("");
     setLoading(true);
@@ -68,15 +72,15 @@ function App() {
         );
 
         const responses = await Promise.all(promises);
-        const temperatures = responses.map(
-          (response) => response.data.forecast.forecastday[0].day.avgtemp_f
+        const temperatures = responses.map((response) =>
+          fahrenheitToCelsius(response.data.forecast.forecastday[0].day.avgtemp_f)
         );
 
         setChartData({
           labels: dates.reverse(),
           datasets: [
             {
-              label: "Average Temperature (°F)",
+              label: "Average Temperature (°C)",
               data: temperatures.reverse(),
               borderColor: "rgba(75, 192, 192, 1)",
               backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -119,7 +123,7 @@ function App() {
           </div>
           <div className="temp">
             {data.forecast ? (
-              <h1>{data.forecast.forecastday[0].day.avgtemp_f.toFixed()}°F</h1>
+              <h1>{fahrenheitToCelsius(data.forecast.forecastday[0].day.avgtemp_f).toFixed(1)}°C</h1>
             ) : null}
           </div>
           <div className="description">
@@ -134,7 +138,7 @@ function App() {
             <div className="feels">
               {data.forecast.forecastday[0].day.feelslike_f ? (
                 <p className="bold">
-                  {data.forecast.forecastday[0].day.feelslike_f.toFixed()}°F
+                  {fahrenheitToCelsius(data.forecast.forecastday[0].day.feelslike_f).toFixed(1)}°C
                 </p>
               ) : null}
               <p>Report for the Day</p>
@@ -159,17 +163,17 @@ function App() {
             </div>
             <div className="temp-range">
               <p className="bold">
-                High: {data.forecast.forecastday[0].day.maxtemp_f.toFixed()}°F
+                High: {fahrenheitToCelsius(data.forecast.forecastday[0].day.maxtemp_f).toFixed(1)}°C
               </p>
               <p className="bold">
-                Low: {data.forecast.forecastday[0].day.mintemp_f.toFixed()}°F
+                Low: {fahrenheitToCelsius(data.forecast.forecastday[0].day.mintemp_f).toFixed(1)}°C
               </p>
               <p>Temperature Range</p>
             </div>
           </div>
         )}
       </div>
-      <div className="chart">
+      <div style={{paddingRight:'50px', paddingLeft:'50px'}}>
         {chartData.labels ? (
           <Line
             data={chartData}
