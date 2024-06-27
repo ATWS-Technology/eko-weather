@@ -23,8 +23,9 @@ ChartJS.register(
 );
 
 function App() {
+  const today = new Date().toISOString().slice(0, 10);
   const [data, setData] = useState({});
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(today);
   const [chartData, setChartData] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -97,7 +98,7 @@ function App() {
     };
 
     fetchData();
-  }, [apiKey]);
+  }, []);
 
   useEffect(() => {
     if (date) {
@@ -114,6 +115,9 @@ function App() {
             {data.location ? data.location.localtime : null}
           </p>
         </div>
+        <p style={{ padding: "20px 20px" }}>
+           Select to check a previous weather report record
+          </p>
         <input
           value={date}
           onChange={(event) => setDate(event.target.value)}
@@ -205,6 +209,7 @@ function App() {
           </div>
         )}
       </div>
+
       <div
         className="app2"
         style={{ paddingRight: "50px", paddingLeft: "50px, back" }}
