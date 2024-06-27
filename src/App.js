@@ -110,7 +110,9 @@ function App() {
       <div className="search">
         <h2 style={{ padding: "20px 20px" }}>Welcome to Lagos State</h2>
         <div className="location">
-          <p>{data.location ? data.location.localtime : null}</p>
+          <p style={{ padding: "20px 20px" }}>
+            {data.location ? data.location.localtime : null}
+          </p>
         </div>
         <input
           value={date}
