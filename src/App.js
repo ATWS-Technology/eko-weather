@@ -47,7 +47,7 @@ function App() {
           <div className="bottom">
             <div className="feels">
               {data.forecast.forecastday[0].day.feelslike_f ? <p className='bold'>{data.forecast.forecastday[0].day.feelslike_f.toFixed()}°F</p> : null}
-              <p>Feels Like</p>
+              <p>Report for the Day</p>
             </div>
             <div className="humidity">
               <p className='bold'>{data.forecast.forecastday[0].day.avghumidity}%</p>
