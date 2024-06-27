@@ -31,24 +31,21 @@ function App() {
 
   const apiKey = "09cfbe33ba8641e1981113826242706";
 
-  const searchWeather = (event) => {
-    if (event.key === "Enter") {
-      setError("");
-      setLoading(true);
-      const url = `https://api.weatherapi.com/v1/history.json?key=${apiKey}&q=lagos&dt=${date}`;
-      axios
-        .get(url)
-        .then((response) => {
-          setData(response.data);
-          console.log(response.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError("Failed to fetch weather data. Please try again.");
-          setLoading(false);
-        });
-      setDate("");
-    }
+  const searchWeather = (selectedDate) => {
+    setError("");
+    setLoading(true);
+    const url = `https://api.weatherapi.com/v1/history.json?key=${apiKey}&q=lagos&dt=${selectedDate}`;
+    axios
+      .get(url)
+      .then((response) => {
+        setData(response.data);
+        console.log(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Failed to fetch weather data. Please try again.");
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -96,6 +93,12 @@ function App() {
     fetchData();
   }, [apiKey]);
 
+  useEffect(() => {
+    if (date) {
+      searchWeather(date);
+    }
+  }, [date]);
+
   return (
     <div className="app">
       <div className="search">
@@ -103,7 +106,6 @@ function App() {
         <input
           value={date}
           onChange={(event) => setDate(event.target.value)}
-          onKeyPress={searchWeather}
           type="date"
           placeholder="Select Date"
         />
