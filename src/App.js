@@ -223,7 +223,7 @@ function App() {
 
       <div
         className="app2"
-        style={{ paddingRight: "50px", paddingLeft: "50px, back" }}
+        style={{ paddingRight: "20px", paddingLeft: "20px" }}
       >
         {chartData.labels ? (
           <Line
