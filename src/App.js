@@ -39,6 +39,16 @@ function App() {
   const searchWeather = (selectedDate) => {
     setError("");
     setLoading(true);
+
+    const selectedDateObj = new Date(selectedDate);
+    const minDateObj = new Date("2010-01-01");
+
+    if (selectedDateObj < minDateObj) {
+      setError("Date must be on or after January 1, 2010.");
+      setLoading(false);
+      return;
+    }
+
     const url = `https://api.weatherapi.com/v1/history.json?key=${apiKey}&q=lagos&dt=${selectedDate}`;
     axios
       .get(url)
@@ -47,8 +57,9 @@ function App() {
         console.log(response.data);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch((response) => {
         setError("Failed to fetch weather data. Please try again.");
+        // console.log(response.error.message)
         setLoading(false);
       });
   };
@@ -116,8 +127,8 @@ function App() {
           </p>
         </div>
         <p style={{ padding: "20px 20px" }}>
-           Select to check a previous weather report record
-          </p>
+          Select to check a previous weather report record
+        </p>
         <input
           value={date}
           onChange={(event) => setDate(event.target.value)}
@@ -219,6 +230,7 @@ function App() {
             data={chartData}
             options={{
               responsive: true,
+              maintainAspectRatio: false,
               plugins: {
                 legend: {
                   position: "top",

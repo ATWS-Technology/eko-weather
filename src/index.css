@@ -110,8 +110,8 @@ h1 {
   margin: 1rem auto;
   padding: 1rem;
   border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.2);
-  margin-bottom: 200px;
+  background-color: rgba(97, 131, 198, 0.685);
+  margin-bottom: 500px;
 }
 
 @media (max-width: 768px) {
